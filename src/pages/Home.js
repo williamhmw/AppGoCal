@@ -1,12 +1,20 @@
-import React from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import React, {useState} from 'react';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-export function Home({navigation}) {
+export function Home() {
+  const navigation = useNavigation()
+  const [nameUser, setNameUser] = useState()
+
   function openData(){
-      navigation.navigate('Data');
+    if(nameUser === ""){
+      Alert.alert("Nome não foi preenchido", "Por favor, inserir o seu nome no campo indicado.")
+    }else{
+      navigation.navigate('Data', {nameUser});
+    }
   }
+
   return (
-   
     <View style={styles.container}>
         <Text style={styles.title}>
                 Para começar como podemos te chamar?
@@ -14,6 +22,8 @@ export function Home({navigation}) {
         <TextInput
             style={styles.input}
             placeholder="Digite o seu nome"
+            onChangeText={setNameUser}
+            value={nameUser}
         />
         <TouchableOpacity 
             style={styles.buttonAvancar}
@@ -43,6 +53,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#969CB3',
         backgroundColor: 'white',
+        textAlign: 'left',
         paddingHorizontal:20,
         paddingVertical:18,
         height: 56,
