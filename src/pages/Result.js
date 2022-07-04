@@ -4,7 +4,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 
 export function Result (){
     const route = useRoute();
-    const { tmb } = route.params;
+    const { calculateTbm } = route.params;
 
     const navigation = useNavigation();
 
@@ -20,12 +20,12 @@ export function Result (){
             <Text style={styles.titleNoBold}>
                 Seu <Text style={styles.title}>metabolismo basal</Text> é de: 
                 {"\n"}
-                <Text style={styles.titleColorGreen}>1606 calorias.{tmb}</Text>
+                <Text style={styles.titleColorGreen}>{calculateTbm} calorias.</Text>
             </Text>
             <Text style={styles.titleNoBold}>
                 Para <Text style={styles.title}>manter o seu peso</Text> você precisa consumir em média: 
                 {"\n"}
-                <Text style={styles.titleColorGreen}>1928 calorias.</Text>
+                <Text style={styles.titleColorGreen}>{calculateTbm} calorias.</Text>
             </Text>
             <Text style={styles.titleNoBold}>
                 Para <Text style={styles.title}>perder peso</Text> você precisa sonsumir em média: 

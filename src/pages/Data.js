@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 import  { Picker }  from  '@react-native-picker/picker' ;
@@ -15,21 +15,58 @@ export function Data() {
     const [height, setHeight] = useState();
     const [selectedGender, setSelectedGender] = useState();
     const [selectePhysicalActivity, setSelectedPhysicalActivity] = useState();
-    const [tmb, setTmb] = useState();
+    const [calculateTbm, setCalculateTbm] = useState();
+    const [calculateNdc, setCalculateNdc] = useState();
 
 
-    
+    const calcMasculine = 655 + (9.6  * weight) + (1.7 * height) - (4.7 *age);
+    const calcFeminine = 66 + (13.7 * weight) + (5 * height) - (6.8 * age);
+
     function calculateBasalCalories(){
-        if (selectedGender==='female'){
-            setTmb = 655 + (9.6  * weight) + (1.7 * height) - (4.7 *1)
-        }else{
-            setTmb = 66 + (13.7 * weight) + (5 * height) - (6.8 * 1)
+      if(selectedGender === 'feminine'){
+        setCalculateTbm(calcFeminine);
+          switch(selectePhysicalActivity){
+            case 'noPhysicalActivity':
+              const resultNoActivity = calcFeminine + (calcFeminine*0.20);
+              console.log('Feminino');
+              setCalculateNdc(resultNoActivity);
+              break;
+            case 'moderatePhysicalActivity':
+              const resultModerateActivity = calcFeminine + (calcFeminine*0.30);
+              console.log('Feminino');
+              setCalculateNdc(resultModerateActivity);
+              break;
+            case 'intensePhysicalActivity':
+              const resultIntenseActivity = calcFeminine + (calcFeminine*0.40);
+              console.log('Feminino');
+              setCalculateNdc(resultIntenseActivity);
+              break;
+          }
+      }else{
+        setCalculateTbm(calcMasculine);
+        switch(selectePhysicalActivity){
+          case 'noPhysicalActivity':
+            const resultNoActivity = calcMasculine + (calcMasculine*0.25);
+            console.log('Feminino');
+            setCalculateNdc(resultNoActivity);
+            break;
+          case 'moderatePhysicalActivity':
+            const resultModerateActivity = calcMasculine + (calcMasculine*0.35);
+            console.log('Feminino');
+            setCalculateNdc(resultModerateActivity);
+            break;
+          case 'intensePhysicalActivity':
+            const resultIntenseActivity = calcMasculine + (calcMasculine*0.45);
+            console.log('Feminino');
+            setCalculateNdc(resultIntenseActivity);
+            break;
         }
+      }  
     }
 
     function openResult(){
         calculateBasalCalories()
-        navigation.navigate('Result', {tmb} );
+        navigation.navigate('Result', {calculateNdc}, {calculateTbm} );
     }
 
     return (
@@ -50,8 +87,8 @@ export function Data() {
             onValueChange={(itemValue, itemIndex) =>
                 setSelectedGender(itemValue)
             }>
-                <Picker.Item label="Feminino" value='Femine'/>
-                <Picker.Item label="Masculino" value='Masculine'/>
+                <Picker.Item label="Feminino" value="feminine"/>
+                <Picker.Item label="Masculino" value="masculine"/>
             </Picker>
             <TextInput
             style={styles.input}
